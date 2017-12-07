@@ -31,6 +31,7 @@ function createRow(){
 	table.rows[lastRow].insertCell();
 	table.rows[lastRow].insertCell();
 	table.rows[lastRow].insertCell();
+	table.rows[lastRow].insertCell();
 }
 
 function check(id, value){
@@ -56,7 +57,7 @@ function fillRow(){
 			cells[0].innerHTML = exercises[lastExercise].first;
 			cells[1].innerHTML = exercises[lastExercise].signText;
 			cells[2].innerHTML = exercises[lastExercise].second;
-			cells[3].innerHTML = exercises[lastExercise].result;
+			cells[3].innerHTML = "=";
 			cells[4].appendChild(insertText);
 }
 

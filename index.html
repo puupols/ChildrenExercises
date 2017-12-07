@@ -5,28 +5,20 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<nav class="navigation">
-		aaa <br>
-		bbb <br>
-	  </nav>
-		<aside>
-			aaa <br>
-			bbb <br>
-		</aside>
-		<div class="top">
-	<input type="number" id="rowCount" name="Uzdevumu skaits"></input>
-	<button onclick="createTable()">Veidot</button>
-</div><p>
-	<div class="center">
-	<table border="1" id="table">
-		<tr>
-			<th>Pirmais cipars</th>
-			<th>Darbība</th>
-			<th>Otris cipars</th>
-			<th>Rezultāts</th>
-			<th>Ievade</th>
-		</tr>
-	</table>
+	<h1>Uzdevumi bērniem</h1>
+	<div class="container">
+		<div class="sideBar">
+		</div>
+		<div class="main">
+			<div class="top">
+				<input type="number" id="rowCount" name="Uzdevumu skaits"></input>
+				<button onclick="createTable()">Veidot</button>
+		</div>
+		<div class="center">
+			<table border="1" id="table">
+			</table>
+		</div>
+</div>
 </div>
 <script type="text/javascript" src="exercises.js"></script>
 </body>
