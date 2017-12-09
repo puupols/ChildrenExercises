@@ -8,38 +8,65 @@
   display: flex;
   flex-direction: column;
   width: 20%;
-  border: 1px solid red;
 }
 
-.main{
+.additional-options, .center, .main{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 80%;
-  border: 1px solid red;
 }
 
-.top{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  border: 1px solid red;
+input[type="checkbox"], input[type="range"]{
+  zoom: 200%
 }
 
-.center{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border: 1px solid red;
+input[type="range"]{
+  width: 40%;
 }
 
-table{
+#exercise-options{
   margin: auto;
 }
 
+.center, .exercise-count, .top{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.main{
+  width: 80%;
+}
+
+
+table{
+  margin: auto;
+  border: none
+}
+
+#createExercises{
+  font-family: "Comic Sans MS", Verdana, Tahoma;
+  font-size: 100%;
+  width: auto;
+}
+
+.input-text {
+  background: transparent;
+  border-style: inset;
+  font-family: "Comic Sans MS", Verdana, Tahoma;
+  font-size: 100%;
+  width: 30px;
+}
 
 body{
-  background-image: url("images/chalkboard-background.jpeg");
+  background-image: url("images/kids-background.jpg");
   background-attachment: fixed;
+  font-family: "Comic Sans MS", Verdana, Tahoma;
+  font-size: 150%;
 
+
+}
+
+@font-face {
+    font-family: "Orange font";
+    src: url(fonts/grobold-font.ttf) format("truetype");
 }

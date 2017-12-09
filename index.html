@@ -11,11 +11,15 @@
 		</div>
 		<div class="main">
 			<div class="top">
-				<input type="number" id="rowCount" name="Uzdevumu skaits"></input>
-				<button onclick="createTable()">Veidot</button>
+				<div class="exercise-options">
+					Uzdevumu skaits: <input class="input-text" type="number" min="0" max="40" value="4" id="rowCount" name="Uzdevumu skaits" required> <br>
+					Negatīvi skaitļi? <input type="checkbox" id="useNegatives"><br>
+					Skaitļi ko izmantot: <input type="range" id="usedNumbers" min="2" max="30" step="2" onchange="setSelectedRange()" value="10"><div id="selectedRange">10</div><br>
+					<input type="button" onclick="createTable()" value="Veidot" id="createExercises"></input><br>
+				</div>
 		</div>
 		<div class="center">
-			<table border="1" id="table">
+			<table id="table">
 			</table>
 		</div>
 </div>
