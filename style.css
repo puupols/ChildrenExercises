@@ -10,9 +10,10 @@
   width: 20%;
 }
 
-.additional-options, .center, .numberExercises{
+.additional-options, .center, .numberExercises, .main, .top{
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 input[type="checkbox"], input[type="range"]{
@@ -27,13 +28,7 @@ input[type="range"]{
   margin: auto;
 }
 
-.center, .exercise-count, .top{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.numberExercises{
+.numberExercises, .letterExercises{
   width: 80%;
 }
 

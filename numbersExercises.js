@@ -2,7 +2,7 @@ var isInputsValid
 var validationMessage
 
 function createTable(){
-var table = document.getElementById("table");
+var table = document.getElementById("numberTable");
 var existingRowCount
 var existingRowCount = table.rows.length
 var exercises = [];
