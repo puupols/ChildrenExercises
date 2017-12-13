@@ -50,6 +50,7 @@ table{
   font-family: "Comic Sans MS", Verdana, Tahoma;
   font-size: 100%;
   width: 30px;
+  text-transform: uppercase;
 }
 
 body{
