@@ -1,5 +1,5 @@
 var first = JSON.parse(data)
-var table = document.getElementById('letterTable')
+var letterTable = document.getElementById('letterTable')
 var exercise = first['0'].exerciseText.toUpperCase()
 var numberArray = [];
 var uniqueLetterCount = 0;
@@ -7,34 +7,36 @@ var uniqueLetters = [];
 var uniqueNumbers = [];
 getAndCountUniqueLetters();
 generateNumbersForUniqueLetters()
-table.insertRow();
-table.insertRow();
-table.insertRow();
+createLetterNumberTable()
+letterTable.insertRow();
+letterTable.insertRow();
+letterTable.insertRow();
+
 for(var i = 0; i < exercise.length; i++){
-  table.rows[0].insertCell()
-  table.rows[1].insertCell()
-  table.rows[2].insertCell()
+  letterTable.rows[0].insertCell()
+  letterTable.rows[1].insertCell()
+  letterTable.rows[2].insertCell()
   if(i == 5 || i == 6){
 
   var insertText = document.createElement('input');
   insertText.id = 'insertText_' + i;
   insertText.setAttribute("class", "input-text")
-  insertText.addEventListener('change', function(){return checkLetter(exercise, insertText.id, insertText.value)})
+  insertText.addEventListener('change', function(){return checkLetter(exercise, this.id, this.value)})
 
-  table.rows[1].cells[i].appendChild(insertText)
-  table.rows[2].cells[i].innerHTML = uniqueNumbers[uniqueLetters.indexOf(exercise.charAt(i))];
+  letterTable.rows[1].cells[i].appendChild(insertText)
+  letterTable.rows[2].cells[i].innerHTML = uniqueNumbers[uniqueLetters.indexOf(exercise.charAt(i))];
   } else {
-  table.rows[1].cells[i].innerHTML = exercise.charAt(i);
-  table.rows[2].cells[i].innerHTML = uniqueNumbers[uniqueLetters.indexOf(exercise.charAt(i))];
+  letterTable.rows[1].cells[i].innerHTML = exercise.charAt(i);
+  letterTable.rows[2].cells[i].innerHTML = uniqueNumbers[uniqueLetters.indexOf(exercise.charAt(i))];
 }
 }
 
 function checkLetter(exercise, insertTextId, value){
   var id = insertTextId.substr(insertTextId.length - 1)
 if(exercise.charAt(id) == value.toUpperCase()){
-  table.rows[0].cells[id].innerHTML = "<img src='images/YES.png' width='25' height='25'>"
+  letterTable.rows[0].cells[id].innerHTML = "<img src='images/YES.png' width='25' height='25'>"
 } else {
-  table.rows[0].cells[id].innerHTML = "<img src='images/NO.png' width='25' height='25'>"
+  letterTable.rows[0].cells[id].innerHTML = "<img src='images/NO.png' width='25' height='25'>"
 }
 }
 
@@ -55,4 +57,19 @@ function generateNumbersForUniqueLetters(){
       }
       uniqueNumbers.push(number);
   }
+}
+
+function createLetterNumberTable(){
+  var numberTable = document.createElement('table');
+  numberTable.id = 'numberTable';
+  numberTable.border = '1';
+for (var i = 0; uniqueLetterCount > i ; i++)
+  {numberTable.insertRow();
+  var lastRow = numberTable.rows.length - 1;
+  numberTable.rows[lastRow].insertCell();
+  numberTable.rows[lastRow].insertCell();
+  numberTable.rows[lastRow].cells[0].innerHTML = uniqueLetters[i];
+  numberTable.rows[lastRow].cells[1].innerHTML = uniqueNumbers[i];
+}
+document.getElementById('letterExercises').appendChild(numberTable);
 }
