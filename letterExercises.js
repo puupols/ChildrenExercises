@@ -1,21 +1,29 @@
-var first = JSON.parse(data)
-var letterTable = document.getElementById('letterTable')
-var exercise = first['0'].exerciseText.toUpperCase()
 var numberArray = [];
 var uniqueLetterCount = 0;
 var uniqueLetters = [];
 var uniqueNumbers = [];
-
+var inputLetterMap = [];
+var exercise;
 function createLetterExercise(){
+var letterTable = document.getElementById('letterTable')
+  getLetterExercise();
   createContainer();
   getAndCountUniqueLetters();
   generateNumbersForUniqueLetters();
   createInputTable();
   createLetterNumberTable();
 
+
+}
+function getLetterExercise(){
+  var letterExerciseData = JSON.parse(data)
+  var randoNumber = Math.floor(Math.random() * Object.keys(letterExerciseData).length)
+  exercise = letterExerciseData[randoNumber].exerciseText.toUpperCase()
+}
+
 function createInputTable(){
 
-
+inputLetterMap = []
 letterTable = document.createElement('table');
 letterTable.id = 'letterTable';
 document.getElementById('letterExercises').appendChild(letterTable);
@@ -30,21 +38,20 @@ for(var i = 0; i < exercise.length; i++){
   var textInput = document.createElement('input');
   textInput.id = 'insertText_' + i;
   textInput.setAttribute("class", "input-text")
-  textInput.addEventListener('change', function(){return checkLetter(exercise, this.id, this.value)})
+  textInput.setAttribute('maxlength', '1')
+  textInput.addEventListener('change', function(){return checkLetter(inputLetterMap, this.id, this.value)})
   letterTable.rows[1].cells[i].appendChild(textInput)
   letterTable.rows[2].cells[i].innerHTML = uniqueNumbers[uniqueLetters.indexOf(exercise.charAt(i))];
+  inputLetterMap[textInput.id] = [exercise.charAt(i), i];
+}
+}
 
-}
-}
-}
-
-function checkLetter(exercise, insertTextId, value){
-  var id = insertTextId.substr(insertTextId.length - 1)
-if(exercise.charAt(id) == value.toUpperCase()){
-  letterTable.rows[0].cells[id].innerHTML = "<img src='images/YES.png' width='25' height='25'>"
-} else {
-  letterTable.rows[0].cells[id].innerHTML = "<img src='images/NO.png' width='25' height='25'>"
-}
+function checkLetter(inputLetterMap, insertTextId, value){
+  if(inputLetterMap[insertTextId][0] == value.toUpperCase()){
+    letterTable.rows[0].cells[inputLetterMap[insertTextId][1]].innerHTML = "<img src='images/YES.png' width='25' height='25'>"
+    } else {
+      letterTable.rows[0].cells[inputLetterMap[insertTextId][1]].innerHTML = "<img src='images/NO.png' width='25' height='25'>"
+  }
 }
 
 function getAndCountUniqueLetters(){
