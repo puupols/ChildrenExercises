@@ -15,41 +15,31 @@ var con = mysql.createConnection({
   database : 'exercises'
 });
 
-con.connect();
 http.createServer(function(req, res){
-  var request = url.parse(req.url, true);
-  if(!(request.pathname == '/favicon.ico')){
-  console.log(request.pathname);
-  return processRequest(req, res);
-}
+  processRequest(req, res);
   }).listen(8080)
 
 function processRequest(req, res){
   var request = url.parse(req.url, true).query;
-  console.log('query request: ' + request.query);
   getResult(request.query, function(qresult){
-  console.log('outer ' + qresult);
-  res.writeHead(200, {'Content-Type': 'text/html'})
-  res.write(qresult);
+  res.writeHead(200, {'Access-Control-Allow-Origin' : '*', 'Content-Type': 'application/json'})
+  res.write(JSON.stringify(qresult));
   res.end();});
-
 }
 
-
-
-function getResult(request, finishResponse) {
+function getResult(request, callback) {
   console.log(request == 'getExercise');
   if (request == 'getExercise'){
+  con.connect();
   con.query(selectExercise, [selectExerciseParams], function(err, result){
     if(err) throw err;
     console.log(result);
-    qresult = result[0].exercise_text;
-    finishResponse(qresult);
+    qresult = result;
+    con.release();
+    callback(qresult);
   });
-
-} else {
-  qresult = 'ERROR';
-  finishResponse(qresult);
-}
-;
+  } else {
+    qresult = 'ERROR';
+    callback(qresult);
+  };
 }
