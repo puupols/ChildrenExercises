@@ -6,19 +6,8 @@ var inputLetterMap = [];
 var exercise;
 function createLetterExercise(){
 var letterTable = document.getElementById('letterTable')
-  getLetterExercise();
   createContainer();
-  getAndCountUniqueLetters();
-  generateNumbersForUniqueLetters();
-  createInputTable();
-  createLetterNumberTable();
-
-
-}
-function getLetterExercise(){
-  var letterExerciseData = JSON.parse(data)
-  var randoNumber = Math.floor(Math.random() * Object.keys(letterExerciseData).length)
-  exercise = letterExerciseData[randoNumber].exerciseText.toUpperCase()
+  getRandomExerciseFromDb(getAndCountUniqueLetters);
 }
 
 function createInputTable(){
@@ -54,7 +43,8 @@ function checkLetter(inputLetterMap, insertTextId, value){
   }
 }
 
-function getAndCountUniqueLetters(){
+function getAndCountUniqueLetters(dbExercises){
+  exercise = (dbExercises[0].exercise_text).toUpperCase();
   uniqueLetterCount = 0;
   uniqueLetters = [];
   for(var i = 0; i < exercise.length; i++ ){
@@ -63,6 +53,9 @@ function getAndCountUniqueLetters(){
         uniqueLetterCount++
     }
   }
+  generateNumbersForUniqueLetters();
+  createInputTable();
+  createLetterNumberTable();
 }
 
 function generateNumbersForUniqueLetters(){
