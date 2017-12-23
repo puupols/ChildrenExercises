@@ -1,9 +1,12 @@
-var numberArray = [];
-var uniqueLetterCount = 0;
-var uniqueLetters = [];
-var uniqueNumbers = [];
-var inputLetterMap = [];
-var exercise;
+var letterExercise = {
+  'numberArray' : [],
+  'uniqueLetterCount' : 0,
+  'uniqueLetters' : [],
+  'uniqueNumbers' : [],
+  'inputLetterMap' : [],
+  'exerciseText' : ''
+};
+
 function createLetterExercise(){
 var letterTable = document.getElementById('letterTable')
   createContainer();
@@ -12,7 +15,7 @@ var letterTable = document.getElementById('letterTable')
 
 function createInputTable(){
 
-inputLetterMap = []
+letterExercise.inputLetterMap = []
 letterTable = document.createElement('table');
 letterTable.id = 'letterTable';
 document.getElementById('letterExercises').appendChild(letterTable);
@@ -20,19 +23,19 @@ letterTable.insertRow();
 letterTable.insertRow();
 letterTable.insertRow();
 
-for(var i = 0; i < exercise.length; i++){
-  letterTable.rows[0].insertCell()
-  letterTable.rows[1].insertCell()
-  letterTable.rows[2].insertCell()
-  var textInput = document.createElement('input');
-  textInput.id = 'insertText_' + i;
-  textInput.setAttribute("class", "input-text")
-  textInput.setAttribute('maxlength', '1')
-  textInput.addEventListener('change', function(){return checkLetter(inputLetterMap, this.id, this.value)})
-  letterTable.rows[1].cells[i].appendChild(textInput)
-  letterTable.rows[2].cells[i].innerHTML = uniqueNumbers[uniqueLetters.indexOf(exercise.charAt(i))];
-  inputLetterMap[textInput.id] = [exercise.charAt(i), i];
-}
+  for(var i = 0; i < letterExercise.exerciseText.length; i++){
+    letterTable.rows[0].insertCell()
+    letterTable.rows[1].insertCell()
+    letterTable.rows[2].insertCell()
+    var textInput = document.createElement('input');
+    textInput.id = 'insertText_' + i;
+    textInput.setAttribute("class", "input-text")
+    textInput.setAttribute('maxlength', '1')
+    textInput.addEventListener('change', function(){return checkLetter(letterExercise.inputLetterMap, this.id, this.value)})
+    letterTable.rows[1].cells[i].appendChild(textInput)
+    letterTable.rows[2].cells[i].innerHTML = letterExercise.uniqueNumbers[letterExercise.uniqueLetters.indexOf(letterExercise.exerciseText.charAt(i))];
+    letterExercise.inputLetterMap[textInput.id] = [letterExercise.exerciseText.charAt(i), i];
+  }
 }
 
 function checkLetter(inputLetterMap, insertTextId, value){
@@ -44,13 +47,13 @@ function checkLetter(inputLetterMap, insertTextId, value){
 }
 
 function getAndCountUniqueLetters(dbExercises){
-  exercise = (dbExercises[0].exercise_text).toUpperCase();
-  uniqueLetterCount = 0;
-  uniqueLetters = [];
-  for(var i = 0; i < exercise.length; i++ ){
-    if(!uniqueLetters.includes(exercise[i])){
-        uniqueLetters.push(exercise[i]);
-        uniqueLetterCount++
+  letterExercise.exerciseText = (dbExercises[0].exercise_text).toUpperCase();
+  letterExercise.uniqueLetterCount = 0;
+  letterExercise.uniqueLetters = [];
+  for(var i = 0; i < letterExercise.exerciseText.length; i++ ){
+    if(!letterExercise.uniqueLetters.includes(letterExercise.exerciseText[i])){
+        letterExercise.uniqueLetters.push(letterExercise.exerciseText[i]);
+        letterExercise.uniqueLetterCount++
     }
   }
   generateNumbersForUniqueLetters();
@@ -59,15 +62,17 @@ function getAndCountUniqueLetters(dbExercises){
 }
 
 function generateNumbersForUniqueLetters(){
-  uniqueNumbers = [];
-    for (var i = 0; uniqueLetterCount > i; i++){
-      var number = Math.floor(Math.random() * 13);
-      while (uniqueNumbers.includes(number)){
-        number = Math.floor(Math.random() * uniqueLetterCount);
+  letterExercise.uniqueNumbers = [];
+  tempRandomNumberArray = [];
+    for (var i = 0; letterExercise.uniqueLetterCount > i; i++){
+        tempRandomNumberArray[i] = i + 1;
       }
-      uniqueNumbers.push(number);
+    for (var i = letterExercise.uniqueLetterCount; i > 0; i--){
+      var number = Math.floor(Math.random() * i);
+      letterExercise.uniqueNumbers.push(tempRandomNumberArray.splice(number, 1));
   }
 }
+
 
 function createContainer(){
   var main = document.getElementById('main');
@@ -75,9 +80,6 @@ function createContainer(){
   if(!!existingLetterExercises){
     main.removeChild(existingLetterExercises);
   }
-
-
-
   divLetterExercises = document.createElement('div');
   divLetterExercises.id = 'letterExercises';
   divLetterExercises.class = 'letterExercises';
@@ -87,17 +89,14 @@ function createContainer(){
 
 function createLetterNumberTable(){
   var numberTable = document.createElement('table');
-  var tempNumberArray = [];
-  var tempLetterArray = [];
-  var tempNumberArray = uniqueNumbers.slice();
-  var tempLetterArray = uniqueLetters.slice();
+  var tempNumberArray = letterExercise.uniqueNumbers.slice();
+  var tempLetterArray = letterExercise.uniqueLetters.slice();
 
   numberTable.id = 'numberTable';
   numberTable.border = '1';
 
-  for (var i = uniqueLetterCount; 0 < i ; i--){
+  for (var i = letterExercise.uniqueLetterCount; 0 < i ; i--){
     randomNumber = Math.floor(Math.random() * i);
-
     randomLetterFromArray = tempLetterArray[randomNumber];
     randomNumberFromArray = tempNumberArray[randomNumber];
     tempNumberArray.splice(randomNumber, 1);
