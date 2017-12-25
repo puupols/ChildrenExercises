@@ -10,7 +10,7 @@
 		<div class="sideBar">
 			<input type="button" id="sideNumberExercises" onclick="showHideMain('sideNumberExercises')" value="Uzdevumi ar numuriem"> <br>
 			<input type="button" id="sideLetterExercises" onclick="showHideMain('sideLetterExercises')" value="Uzdevumi ar burtiem"> <br>
-			<input type="button" id="getExerciseFromDb" onclick="getExerciseFromDb()" value="Meklēt uzdevumu"> <br>
+			<input type="button" id="sideAddLetterExercise" onclick="showHideMain('sideAddLetterExercise')" value="Veidot burtu uzdevumu"> <br>
 		</div>
 		<div id="main" class="main" style="visibility:hidden">
 		<div class="numberExercises" id="numberExercises">
@@ -27,7 +27,6 @@
 			</table>
 		</div>
 </div>
-<p id="fromDB" style="visibility:visible"></p>
 </div>
 </div>
 <script type="text/javascript" src="sideBar.js"></script>
@@ -35,5 +34,6 @@
 <script type="text/javascript" src="numbersExercises.js"></script>
 <script type="text/javascript" src="letterExercises.js"></script>
 <script type="text/javascript" src="lib/dbLib.js"></script>
+<script type="text/javascript" src="AddLetterExercise.js"></script>
 </body>
 </html>

@@ -4,5 +4,7 @@ function showHideMain(selectedExercise){
     document.getElementById('letterExercises').style.visibility = 'hidden';
   } else if (selectedExercise == 'sideLetterExercises'){
     createLetterExercise();
+  } else if (selectedExercise == 'sideAddLetterExercise'){
+    sideAddLetterExercise();
   }
 }

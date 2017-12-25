@@ -10,7 +10,7 @@ var letterExercise = {
 function createLetterExercise(){
 var letterTable = document.getElementById('letterTable')
   createContainer();
-  getRandomExerciseFromDb(getAndCountUniqueLetters);
+  getRandomLetterExerciseFromDb(getAndCountUniqueLetters);
 }
 
 function createInputTable(){

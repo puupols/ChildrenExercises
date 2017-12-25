@@ -53,6 +53,10 @@ table{
   text-transform: uppercase;
 }
 
+#addLetterExerciseText{
+  width: 300px;
+}
+
 body{
   background-image: url("images/kids-background.jpg");
   background-attachment: fixed;
