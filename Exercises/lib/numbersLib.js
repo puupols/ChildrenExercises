@@ -39,6 +39,7 @@ function createRow(table){
 }
 
 function check(exercises, id, value){
+	var table = document.getElementById("numberTable");
 	if ((exercises[id - 1].result) == value){
 		table.rows[id - 1].cells[5].innerHTML = "<img src='images/YES.png' width='25' height='25'>"
 	} else {

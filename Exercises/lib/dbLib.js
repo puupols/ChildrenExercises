@@ -6,7 +6,7 @@ function getRandomLetterExerciseFromDb(callback){
         callback(resopnseJS)
     }
   };
-  xhttp.open('GET', 'http://localhost:8080/randomExercise', true)
+  xhttp.open('GET', 'http://localhost:8080/randomLetterExercise', true)
   xhttp.send();
 }
 
