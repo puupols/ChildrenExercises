@@ -75,6 +75,15 @@ function create() {
     var baddie = baddies.create(Math.random() * 760, 0, 'baddie');
     baddie.body.gravity.y = 100;
     baddie.body.bounce.y = 0.1;
+    baddie.animations.add('right', [2, 3], 10, true);
+    baddie.animations.add('left', [0, 1], 10, true);
+    
+    if( i % 2 == 0 ){
+      baddie.body.velocity.x = 50;    
+    } else {
+      baddie.body.velocity.x = -50;
+    }
+
   }
 
 
@@ -91,6 +100,23 @@ function create() {
 
 function update() {
 
+  baddies.forEach(baddie => {
+    if (baddie.body.velocity.x == 50){
+      baddie.animations.play('right');
+    } else {
+      baddie.animations.play('left');
+    }
+  });
+
+  baddies.forEach(baddie => {
+    if(baddie.x > game.world.width - 32){
+      baddie.body.velocity.x = -50;
+    } else if (baddie.x < 0){
+      baddie.body.velocity.x = 50;
+    }
+  })
+
+  
   var hitPlatform = game.physics.arcade.collide(player, platforms);
 
   game.physics.arcade.collide(stars, platforms);
@@ -101,7 +127,6 @@ function update() {
   game.physics.arcade.collide(boxes, player);
   game.physics.arcade.collide(boxes, platforms);
   game.physics.arcade.overlap(bullets, boxes, destroyBox, null, this);
-
 
 
   player.body.acceleration.x = 0
@@ -156,7 +181,7 @@ function destroyBaddieBullet(bullet, baddie){
   bullet.kill();
 }
 
-function destroyBaddiePlayer(bullet, player){
+function destroyBaddiePlayer(baddie, player){
   baddie.kill();
   player.kill();
 }
