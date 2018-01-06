@@ -1,34 +1,31 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload : preload, create : create, update : update});
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 
-  var score = 0;
-  var upKey;
-  var downKey;
-  var leftKey;
-  var rightKey;
-  var shootKay;
-  var shootEvent;
-  var timer;
-  var total = 0;
+var score = 0;
+var upKey;
+var downKey;
+var leftKey;
+var rightKey;
+var shootKay;
+var shootEvent;
+var timer;
+var total = 0;
+var direction = 1;
 
-function preload(){
+function preload() {
   game.load.image('sky', 'assets/sky.png');
   game.load.image('ground', 'assets/platform.png');
   game.load.image('star', 'assets/star.png');
   game.load.image('box', 'assets/box.png');
   game.load.image('bullet', 'assets/bullet.png');
   game.load.spritesheet('dude', 'assets/mydude.png', 32, 32);
+  game.load.spritesheet('baddie', 'assets/baddie.png', 32, 32)
 }
 
-function create(){
+function create() {
 
   timer = game.time.create(true);
   timer.loop(500, shoot, this);
-  function shoot(){
-    var bullet = bullets.create(player.x, player.y, 'bullet');
-    bullet.body.velocity.x = 150;
-  }
-
 
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.add.sprite(0, 0, 'sky');
@@ -56,24 +53,32 @@ function create(){
   stars = game.add.group();
   boxes = game.add.group();
   bullets = game.add.group();
+  baddies = game.add.group();
 
   stars.enableBody = true;
   boxes.enableBody = true;
   bullets.enableBody = true;
+  baddies.enableBody = true;
 
 
   var box = boxes.create(500, game.world.height - 300, 'box');
   box.body.gravity.y = 300;
   box.body.drag.x = 100;
 
-  for (var i = 0; i < 12; i++){
-   var star = stars.create(i * 70, 0, 'star');
-   star.body.gravity.y = 12;
-   star.body.bounce.y = 0.7 + Math.random() * 0.2;
+  for (var i = 0; i < 12; i++) {
+    var star = stars.create(i * 70, 0, 'star');
+    star.body.gravity.y = 12;
+    star.body.bounce.y = 0.7 + Math.random() * 0.2;
+  }
+
+  for (var i = 0; i < 3; i++){
+    var baddie = baddies.create(Math.random() * 760, 0, 'baddie');
+    baddie.body.gravity.y = 100;
+    baddie.body.bounce.y = 0.1;
   }
 
 
-  scoreText = game.add.text(16,16, 'score: 0', {fontSize: '32px', fill: '#000'});
+  scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
   upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
   downKey = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
@@ -84,23 +89,26 @@ function create(){
 
 }
 
-function update(){
+function update() {
 
   var hitPlatform = game.physics.arcade.collide(player, platforms);
 
   game.physics.arcade.collide(stars, platforms);
+  game.physics.arcade.overlap(baddies, bullets, destroyBaddieBullet, null, this);
+  game.physics.arcade.overlap(baddies, player, destroyBaddiePlayer, null, this);
+  game.physics.arcade.collide(baddies, platforms);
   game.physics.arcade.overlap(player, stars, collectStar, null, this);
-
   game.physics.arcade.collide(boxes, player);
   game.physics.arcade.collide(boxes, platforms);
+  game.physics.arcade.overlap(bullets, boxes, destroyBox, null, this);
 
 
 
   player.body.acceleration.x = 0
-  if(leftKey.isDown){
+  if (leftKey.isDown) {
     player.body.acceleration.x -= 150;
     player.animations.play('left');
-  } else if (rightKey.isDown){
+  } else if (rightKey.isDown) {
     player.body.acceleration.x += 150;
     player.animations.play('right');
   } else {
@@ -108,22 +116,47 @@ function update(){
     player.frame = 0;
   }
 
-  if(upKey.isDown && player.body.touching.down){
+  if (upKey.isDown && player.body.touching.down) {
     player.body.velocity.y = -300;
   }
 
-  if(shootKay.isDown && !timer.running){
+  if (shootKay.isDown && !timer.running) {
+    if(leftKey.isDown){
+      direction = -1;
+    } else {
+      direction = 1;
+    }
+    shoot();
     timer.start();
-    console.log(!timer.running);
-  } else if (!shootKay.isDown && timer.running){
+  } else if (!shootKay.isDown && timer.running) {
     timer.stop(false);
-    console.log('stop');
   }
 
-  function collectStar(player, star){
-    star.kill();
-    score += 10;
-    scoreText.text = 'Score: ' + score;
-  }
+}
 
+
+function shoot() {
+  var bullet = bullets.create(player.x + 10, player.y + 10, 'bullet');
+  bullet.body.velocity.x = 150 * direction;
+}
+
+function collectStar(player, star) {
+  star.kill();
+  score += 10;
+  scoreText.text = 'Score: ' + score;
+}
+
+function destroyBox(bullet, box){
+  box.kill();
+  bullet.kill();
+}
+
+function destroyBaddieBullet(bullet, baddie){
+  baddie.kill();
+  bullet.kill();
+}
+
+function destroyBaddiePlayer(bullet, player){
+  baddie.kill();
+  player.kill();
 }
