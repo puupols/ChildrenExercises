@@ -1,8 +1,9 @@
 var playState = {
     
     create : function(){
-        grid.create(5, 5);         
-        var tank = tankUtil.createTank(0, 0);        
+        grid.create(5, 5);
+        buttons.createMoveButtons();
+        var tank = tankUtil.createTank(21);        
     },
 
     update : function(){
