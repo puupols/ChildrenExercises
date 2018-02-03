@@ -16,7 +16,7 @@ var playState = (function(){
         playGround.createBlocks(levelConfig.blocksV, levelConfig.blocksH);
         playGround.createEagles(levelConfig.eagles);
         buttons.createMoveButtons(levelConfig.gridCountX);
-        tank = tankUtil.createTank(levelConfig.tankGridPosition);        
+        tank = tankUtil.createTank(levelConfig.tankGridPosition);
     };
 
     var update = function(){
