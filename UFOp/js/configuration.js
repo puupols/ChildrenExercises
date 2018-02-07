@@ -16,7 +16,10 @@ var configuration = (function(){
             '2' : {
                 'gridCountX' : '3',
                 'gridCountY' : '5',
-                'tankGridPosition' : '13'
+                'tankGridPosition' : '13',
+                'blocksV' : ['5'],
+                'blocksH' : ['5'],
+                'eagles' : ['3']
             }
         }}
 
