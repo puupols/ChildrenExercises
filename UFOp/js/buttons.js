@@ -1,7 +1,9 @@
 var buttons = (function(){
     
+    
     var playPosition = 0;
     var shouldDriveX = false;
+    var shouldRotate = false;
     
     var createMoveButtons = function(gridCountX){
         var girdEdge = playGround.grids[gridCountX].x + playGround.grids[gridCountX].width;
@@ -27,19 +29,61 @@ var buttons = (function(){
         var task = playState.program[playPosition]
         switch(task){
             case 'DRIVE' : 
-            switch(tankUtil.currentDirection){
+            switch(tankUtil.getCurrentDirection()){
+                case 'E' :
+                tankUtil.setDesiredPositionX(tankUtil.getTank().x + playGround.grids[0].width);
+                shouldDriveX = 'true';
+                break;
                 case 'W' :
-                tankUtil.desiredPositionX = tankUtil.tank.x + playGround.grids[0].height;
-                shouldDriveX = true
+                tankUtil.setDesiredPositionX(tankUtil.getTank().x - playGround.grids[0].width);
+                shouldDriveX = 'true';
+                break;
             }
+            break;
+            case 'RIGHT' :
+            tankUtil.setDesiredAngle(tankUtil.getDesiredAngle() + 90);
+            shouldRotate = 'true';
+            break;
+            case 'LEFT' :
+            tankUtil.setDesiredAngle(tankUtil.getDesiredAngle() - 90);
+            shouldRotate = 'true';
+            break;
         }        
+    }
+
+    var getPlayPosition = function(){
+        return playPosition;
+    }
+
+    var setPlayPosition = function(x){
+        playPosition = x;
+    }
+    
+    var getShouldDriveX = function(){
+        return shouldDriveX;
+    }
+    
+    var setShouldDriveX = function(bool){
+        shouldDriveX = bool;
+    }
+
+    var setShouldRotate = function(bool){
+        shouldRotate = bool;
+    }
+
+    var getShouldRotate = function(){
+        return shouldRotate;
     }
     
     return {
         createMoveButtons : createMoveButtons,
         play : play,
-        playPosition : playPosition,
-        shouldDriveX : shouldDriveX
+        getPlayPosition : getPlayPosition,
+        getShouldDriveX : getShouldDriveX,
+        setPlayPosition : setPlayPosition,
+        setShouldDriveX : setShouldDriveX,
+        setShouldRotate : setShouldRotate,
+        getShouldRotate : getShouldRotate
     }
 
 })()

@@ -3,7 +3,7 @@ var playState = (function(){
     var levelConfig;
     var blocks;
     var eagles;
-    var program = ['DRIVE', 'DRIVE', 'LEFT', 'DRIVE', 'DRIVE']
+    var program = ['RIGHT', 'DRIVE', 'LEFT', 'DRIVE', 'DRIVE']
     
 
     
@@ -16,23 +16,45 @@ var playState = (function(){
         playGround.createGrids(levelConfig.gridCountX, levelConfig.gridCountY);
         playGround.createProgramWindows(levelConfig.gridCountX);
         playGround.createBlocks(levelConfig.blocksV, levelConfig.blocksH);
-        playGround.createEagles(levelConfig.eagles);     
-        tankUtil.createTank(levelConfig.tankGridPosition);   
+        playGround.createEagles(levelConfig.eagles);                
         buttons.createMoveButtons(levelConfig.gridCountX);
-        
-        
+        tankUtil.createTank(levelConfig.tankGridPosition);
+                
     };
 
     var update = function(){
-        if(buttons.shouldDriveX == true){
-            if(tankUtil.tank.x != tankUtil.desiredPositionX){
-                tankUtil.tank.body.velocity.x = 150
-            } else {
-                buttons.shouldDriveX = false;
-                buttons.playPosition++;
-                buttons.play();
-            }
-            
+        var tank = tankUtil.getTank();        
+        if(buttons.getShouldDriveX() == 'true'){
+            driveX(tank);
+        }
+        if(buttons.getShouldRotate() == 'true'){
+            rotate(tank);
+        }
+    }
+
+    var driveX = function(tank){
+        if(tank.x < tankUtil.getDesiredPositionX()){
+            tank.body.velocity.x = 150;
+        } else if(tank.x > tankUtil.getDesiredPositionX()){
+            tank.body.velocity.x = -150;
+        } else {
+            tank.body.velocity.x = 0;
+            buttons.setShouldDriveX('false');
+            buttons.setPlayPosition(buttons.getPlayPosition() + 1);
+            buttons.play();
+        }        
+    }
+    
+    var rotate = function(tank){
+        if(tank.angle < tankUtil.getDesiredAngle()){
+            tank.angle += 1;
+        } else if(tank.angle > tankUtil.getDesiredAngle()){
+            tank.angle -= 1;
+        } else {            
+            buttons.setShouldRotate('false');
+            tankUtil.setCurrentDirection('E');
+            buttons.setPlayPosition(buttons.getPlayPosition() + 1);
+            buttons.play();
         }
     }
 
