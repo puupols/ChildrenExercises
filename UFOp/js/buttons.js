@@ -3,6 +3,7 @@ var buttons = (function(){
     
     var playPosition = 0;
     var shouldDriveX = false;
+    var shouldDriveY = false;
     var shouldRotate = false;
     
     var createMoveButtons = function(gridCountX){
@@ -27,25 +28,47 @@ var buttons = (function(){
     
     var play = function(){
         var task = playState.program[playPosition]
+        var tank = tankUtil.getTank();
         switch(task){
             case 'DRIVE' : 
-            switch(tankUtil.getCurrentDirection()){
-                case 'E' :
+            switch(tankUtil.getDesiredAngle()){
+                case 90 :
                 tankUtil.setDesiredPositionX(tankUtil.getTank().x + playGround.grids[0].width);
                 shouldDriveX = 'true';
                 break;
-                case 'W' :
+                case -90 :
                 tankUtil.setDesiredPositionX(tankUtil.getTank().x - playGround.grids[0].width);
                 shouldDriveX = 'true';
+                break;
+                case 0 :
+                tankUtil.setDesiredPositionY(tankUtil.getTank().y - playGround.grids[0].height);
+                shouldDriveY = 'true';
+                break;
+                case 180 || -180 :
+                tankUtil.setDesiredPositionY(tankUtil.getTank().y + playGround.grids[0].height);
+                shouldDriveY = 'true';
                 break;
             }
             break;
             case 'RIGHT' :
-            tankUtil.setDesiredAngle(tankUtil.getDesiredAngle() + 90);
+            var desiredAngle = 0;
+            desiredAngle = tankUtil.getDesiredAngle() + 90;
+            if (desiredAngle > 180){
+                desiredAngle = desiredAngle - 360;
+                tank.angle = -179
+            }
+            tankUtil.setDesiredAngle(desiredAngle);
             shouldRotate = 'true';
             break;
             case 'LEFT' :
-            tankUtil.setDesiredAngle(tankUtil.getDesiredAngle() - 90);
+            var desiredAngle = 0;
+            desiredAngle = tankUtil.getDesiredAngle() - 90;
+            if(desiredAngle < -180){
+                desiredAngle = desiredAngle + 360;
+                tank.angle = 179
+            }
+            tankUtil.setDesiredAngle(desiredAngle);
+
             shouldRotate = 'true';
             break;
         }        
@@ -67,6 +90,14 @@ var buttons = (function(){
         shouldDriveX = bool;
     }
 
+    var getShouldDriveY = function(){
+        return shouldDriveY;
+    }
+    
+    var setShouldDriveY = function(bool){
+        shouldDriveY = bool;
+    }
+
     var setShouldRotate = function(bool){
         shouldRotate = bool;
     }
@@ -80,8 +111,10 @@ var buttons = (function(){
         play : play,
         getPlayPosition : getPlayPosition,
         getShouldDriveX : getShouldDriveX,
+        getShouldDriveY : getShouldDriveY,
         setPlayPosition : setPlayPosition,
         setShouldDriveX : setShouldDriveX,
+        setShouldDriveY : setShouldDriveY,
         setShouldRotate : setShouldRotate,
         getShouldRotate : getShouldRotate
     }

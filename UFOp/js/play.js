@@ -3,7 +3,7 @@ var playState = (function(){
     var levelConfig;
     var blocks;
     var eagles;
-    var program = ['RIGHT', 'DRIVE', 'LEFT', 'DRIVE', 'DRIVE']
+    var program = ['RIGHT', 'RIGHT', 'RIGHT', 'LEFT', 'LEFT', 'DRIVE', 'LEFT', 'DRIVE', 'DRIVE', 'DRIVE', 'DRIVE', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT']
     
 
     
@@ -26,9 +26,10 @@ var playState = (function(){
         var tank = tankUtil.getTank();        
         if(buttons.getShouldDriveX() == 'true'){
             driveX(tank);
-        }
-        if(buttons.getShouldRotate() == 'true'){
+        } else if(buttons.getShouldRotate() == 'true'){
             rotate(tank);
+        } else if(buttons.getShouldDriveY() == 'true'){
+            driveY(tank);
         }
     }
 
@@ -44,15 +45,27 @@ var playState = (function(){
             buttons.play();
         }        
     }
+
+    var driveY = function(tank){
+        if(tank.y < tankUtil.getDesiredPositionY()){
+            tank.body.velocity.y = 150;
+        } else if(tank.y > tankUtil.getDesiredPositionY()){
+            tank.body.velocity.y = -150;
+        } else {
+            tank.body.velocity.y = 0;
+            buttons.setShouldDriveY('false');
+            buttons.setPlayPosition(buttons.getPlayPosition() + 1);
+            buttons.play();
+        }        
+    }
     
     var rotate = function(tank){
-        if(tank.angle < tankUtil.getDesiredAngle()){
+        if(tank.angle < tankUtil.getDesiredAngle() - 1){
             tank.angle += 1;
-        } else if(tank.angle > tankUtil.getDesiredAngle()){
+        } else if(tank.angle > tankUtil.getDesiredAngle() + 1){
             tank.angle -= 1;
         } else {            
-            buttons.setShouldRotate('false');
-            tankUtil.setCurrentDirection('E');
+            buttons.setShouldRotate('false');            
             buttons.setPlayPosition(buttons.getPlayPosition() + 1);
             buttons.play();
         }

@@ -5,7 +5,6 @@ var tankUtil = (function(){
     desiredPositionX = 0;
     desiredPositionY = 0;
     desiredAngle = 0;
-    currentDirection = 'W';
 
     var createTank = function (gridNumber){
         tank = game.add.sprite((playGround.grids[gridNumber].x + (playGround.grids[gridNumber].width / 2)), (playGround.grids[gridNumber].y + (playGround.grids[gridNumber].height / 2)), 'tank');
@@ -27,18 +26,14 @@ var tankUtil = (function(){
 
     var getDesiredAngle = function(){
         return desiredAngle;
-    }
-
-    var getCurrentDirection = function(){
-        return currentDirection;
-    }
-
-    var setCurrentDirection = function(x){
-        currentDirection = x;
-    }
+    }    
 
     var setDesiredPositionX = function(x){
         desiredPositionX = x;
+    }
+
+    var setDesiredPositionY = function(y){
+        desiredPositionY = y;
     }
 
     var setDesiredAngle = function(x){
@@ -50,11 +45,10 @@ var tankUtil = (function(){
         getTank : getTank,
         getDesiredPositionX : getDesiredPositionX,
         getDesiredPositionY : getDesiredPositionY,
-        getDesiredAngle : getDesiredAngle,
-        getCurrentDirection : getCurrentDirection,
+        getDesiredAngle : getDesiredAngle,        
         setDesiredPositionX : setDesiredPositionX,
-        setDesiredAngle : setDesiredAngle,
-        setCurrentDirection : setCurrentDirection,
+        setDesiredPositionY : setDesiredPositionY,
+        setDesiredAngle : setDesiredAngle,       
         createTank : createTank
     };
 })();
