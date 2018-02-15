@@ -6,9 +6,10 @@ var tankUtil = (function(){
     desiredPositionY = 0;
     desiredAngle = 0;
 
-    var createTank = function (gridNumber){
+    var createTank = function (gridNumber, angle){
         tank = game.add.sprite((playGround.grids[gridNumber].x + (playGround.grids[gridNumber].width / 2)), (playGround.grids[gridNumber].y + (playGround.grids[gridNumber].height / 2)), 'tank');
         tank.anchor.setTo(0.5);
+        tank.angle = angle;
         game.physics.arcade.enable(tank);
     }
 

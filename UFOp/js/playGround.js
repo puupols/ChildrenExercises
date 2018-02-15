@@ -43,11 +43,11 @@ var playGround =  (function (){
     };
 
     var _selectMainGrid = function(){
-
+        buttons.setSelectedProgramWindow(0);
     };
 
     var _selectP1Grid = function(){
-
+        buttons.setSelectedProgramWindow(1);
     };
 
     return {

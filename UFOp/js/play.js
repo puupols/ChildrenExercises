@@ -1,9 +1,9 @@
 var playState = (function(){
     
-    var levelConfig;
+    var levelConfig = {};
     var blocks;
     var eagles;
-    var program = ['RIGHT', 'RIGHT', 'RIGHT', 'LEFT', 'LEFT', 'DRIVE', 'LEFT', 'DRIVE', 'DRIVE', 'DRIVE', 'DRIVE', 'RIGHT', 'RIGHT', 'RIGHT', 'RIGHT']
+    var program = []
     
 
     
@@ -18,7 +18,7 @@ var playState = (function(){
         playGround.createBlocks(levelConfig.blocksV, levelConfig.blocksH);
         playGround.createEagles(levelConfig.eagles);                
         buttons.createMoveButtons(levelConfig.gridCountX);
-        tankUtil.createTank(levelConfig.tankGridPosition);
+        tankUtil.createTank(levelConfig.tankGridPosition, levelConfig.tankAngle);
                 
     };
 
@@ -71,7 +71,12 @@ var playState = (function(){
         }
     }
 
+    var getLevelConfig = function(){
+        return levelConfig;
+    }
+
     return{
+        getLevelConfig: getLevelConfig,
         init : init,
         create : create,
         update : update,

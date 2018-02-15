@@ -8,6 +8,7 @@ var loadState = {
         game.load.image('left', '../assets/left.png');
         game.load.image('right', '../assets/right.png');
         game.load.image('drive', '../assets/drive.png');
+        game.load.image('play', '../assets/play.png');
         game.load.image('blockH', '../assets/blockH.png');
         game.load.image('blockV', '../assets/blockV.png');
         game.load.image('eagle', '../assets/eagle.png');
