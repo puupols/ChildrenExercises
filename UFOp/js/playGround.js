@@ -37,8 +37,8 @@ var playGround =  (function (){
     };
 
     var createProgramWindows = function (gridCountX){
-        var mainGrid = game.add.button(grids[0].width * gridCountX, grids[0].height, 'mainGrid', _selectMainGrid())
-        var p1Grid = game.add.button(grids[0].width * gridCountX, mainGrid.y + mainGrid.height, 'p1Grid', _selectP1Grid())
+        var mainGrid = game.add.button(grids[0].width * gridCountX, grids[0].height, 'mainGrid', _selectMainGrid)
+        var p1Grid = game.add.button(grids[0].width * gridCountX, mainGrid.y + mainGrid.height, 'p1Grid', _selectP1Grid)
         
     };
 

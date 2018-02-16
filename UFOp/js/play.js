@@ -3,7 +3,8 @@ var playState = (function(){
     var levelConfig = {};
     var blocks;
     var eagles;
-    var program = []
+    var mainProgram = []
+    var p1Program = []
     
 
     
@@ -39,10 +40,7 @@ var playState = (function(){
         } else if(tank.x > tankUtil.getDesiredPositionX()){
             tank.body.velocity.x = -150;
         } else {
-            tank.body.velocity.x = 0;
-            buttons.setShouldDriveX('false');
-            buttons.setPlayPosition(buttons.getPlayPosition() + 1);
-            buttons.play();
+            callPlay(tank);            
         }        
     }
 
@@ -52,10 +50,7 @@ var playState = (function(){
         } else if(tank.y > tankUtil.getDesiredPositionY()){
             tank.body.velocity.y = -150;
         } else {
-            tank.body.velocity.y = 0;
-            buttons.setShouldDriveY('false');
-            buttons.setPlayPosition(buttons.getPlayPosition() + 1);
-            buttons.play();
+            callPlay(tank);
         }        
     }
     
@@ -64,11 +59,24 @@ var playState = (function(){
             tank.angle += 1;
         } else if(tank.angle > tankUtil.getDesiredAngle() + 1){
             tank.angle -= 1;
-        } else {            
-            buttons.setShouldRotate('false');            
-            buttons.setPlayPosition(buttons.getPlayPosition() + 1);
-            buttons.play();
+        } else {
+            callPlay(tank);
         }
+    }
+
+    var callPlay = function(tank){
+        tank.body.velocity.x = 0;
+        tank.body.velocity.y = 0;
+        buttons.setShouldDriveY('false');
+        buttons.setShouldDriveX('false');
+        buttons.setShouldRotate('false');
+        if(mainProgram[buttons.getMainPlayPosition()] == 'P1' && p1Program.length > buttons.getP1PlayPosition() + 1){
+            buttons.setP1PlayPosition(buttons.getP1PlayPosition() + 1);
+        } else {
+            buttons.setMainPlayPosition(buttons.getMainPlayPosition() + 1);
+            buttons.setP1PlayPosition(0);
+        }        
+        buttons.play();
     }
 
     var getLevelConfig = function(){
@@ -80,6 +88,7 @@ var playState = (function(){
         init : init,
         create : create,
         update : update,
-        program : program
+        mainProgram : mainProgram,
+        p1Program : p1Program
     }
 })()

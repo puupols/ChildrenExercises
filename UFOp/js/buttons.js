@@ -1,7 +1,8 @@
 var buttons = (function(){
     
     
-    var playPosition = 0;
+    var mainPlayPosition = 0;
+    var p1PlayPosition = 0;
     var selectedProgramWindow = 0;
     var shouldDriveX = false;
     var shouldDriveY = false;
@@ -13,28 +14,52 @@ var buttons = (function(){
         var leftButton = game.add.button(girdEdge, 0, 'left', _addLeft);
         var rightButton = game.add.button(girdEdge + leftButton.width, 0, 'right', _addRight);
         var driveButton = game.add.button(girdEdge + leftButton.width + rightButton.width, 0, 'drive', _addDrive);
-        var playButton = game.add.button(girdEdge + leftButton.width + rightButton.width + driveButton.width, 0, 'play', play);
+        var p1Button = game.add.button(girdEdge, leftButton.height, 'p1Button', _addP1);
+        var playButton = game.add.button(girdEdge + p1Button.width, leftButton.height, 'play', play);
     }    
 
     var _addLeft = function(){
-        playState.program.push('LEFT')
-
+        if(selectedProgramWindow == 0){
+            playState.mainProgram.push('LEFT')
+        } else if(selectedProgramWindow == 1)
+        playState.p1Program.push('LEFT')
     };
 
     var _addRight = function(){
-        playState.program.push('RIGHT')
+        if(selectedProgramWindow == 0){
+            playState.mainProgram.push('RIGHT')
+        } else if (selectedProgramWindow == 1){
+            playState.p1Program.push('RIGHT')
+        }
+        
     };
 
     var _addDrive = function(){
-        playState.program.push('DRIVE')
+        if(selectedProgramWindow == 0){
+            playState.mainProgram.push('DRIVE')
+        } else if(selectedProgramWindow == 1){
+            playState.p1Program.push('DRIVE')
+        }        
+    };
+
+    var _addP1 = function(){
+        if(selectedProgramWindow == 0){
+            playState.mainProgram.push('P1')
+        } else if(selectedProgramWindow == 1){
+            playState.p1Program.push('P1')
+        } 
+
     };
     
     var play = function(){
         var tank = tankUtil.getTank();
-        if(playPosition >= playState.program.length){
+        if(mainPlayPosition >= playState.mainProgram.length){
             _resetPlay(tank);
         } else {
-            var task = playState.program[playPosition]            
+            var task = playState.mainProgram[mainPlayPosition]            
+            if (task == 'P1'){
+                task = playState.p1Program[p1PlayPosition]
+            }
             switch(task){
                 case 'DRIVE' : 
                 _drive(task, tank);
@@ -44,13 +69,13 @@ var buttons = (function(){
                 break;
                 case 'LEFT' :
                 _left(tank);
-                break;
+                break;                
             }
         }        
     }
 
     var _resetPlay = function(tank){
-        playPosition = 0;
+        mainPlayPosition = 0;
         var levelConfig = playState.getLevelConfig();
         tank.x = (playGround.grids[levelConfig.tankGridPosition].x + (playGround.grids[levelConfig.tankGridPosition].width / 2))
         tank.y = (playGround.grids[levelConfig.tankGridPosition].y + (playGround.grids[levelConfig.tankGridPosition].height / 2))
@@ -100,16 +125,23 @@ var buttons = (function(){
                 tank.angle = 179
             }
             tankUtil.setDesiredAngle(desiredAngle);
-
             shouldRotate = 'true';
     }
 
-    var getPlayPosition = function(){
-        return playPosition;
+    var getMainPlayPosition = function(){
+        return mainPlayPosition;
     }
 
-    var setPlayPosition = function(x){
-        playPosition = x;
+    var setMainPlayPosition = function(x){
+        mainPlayPosition = x;
+    }
+
+    var getP1PlayPosition = function(){
+        return p1PlayPosition;
+    }
+
+    var setP1PlayPosition = function(x){
+        p1PlayPosition = x;
     }
     
     var getShouldDriveX = function(){
@@ -143,10 +175,12 @@ var buttons = (function(){
     return {
         createMoveButtons : createMoveButtons,
         play : play,
-        getPlayPosition : getPlayPosition,
+        getMainPlayPosition : getMainPlayPosition,
+        getP1PlayPosition : getP1PlayPosition,
+        setP1PlayPosition : setP1PlayPosition,
         getShouldDriveX : getShouldDriveX,
         getShouldDriveY : getShouldDriveY,
-        setPlayPosition : setPlayPosition,
+        setMainPlayPosition : setMainPlayPosition,
         setShouldDriveX : setShouldDriveX,
         setShouldDriveY : setShouldDriveY,
         setShouldRotate : setShouldRotate,
