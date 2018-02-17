@@ -7,6 +7,8 @@ var buttons = (function(){
     var shouldDriveX = false;
     var shouldDriveY = false;
     var shouldRotate = false;
+    var mainButtons = [];
+    var p1Buttons = [];
     
     var createMoveButtons = function(gridCountX){
         var girdEdge = playGround.grids[gridCountX].x + playGround.grids[gridCountX].width;
@@ -19,17 +21,22 @@ var buttons = (function(){
     }    
 
     var _addLeft = function(){
-        if(selectedProgramWindow == 0){
+        if(selectedProgramWindow == 0){            
             playState.mainProgram.push('LEFT')
-        } else if(selectedProgramWindow == 1)
-        playState.p1Program.push('LEFT')
+            addMainButton('left');            
+        } else if(selectedProgramWindow == 1){
+            playState.p1Program.push('LEFT')
+            addP1Button('left');
+        }            
     };
 
     var _addRight = function(){
         if(selectedProgramWindow == 0){
             playState.mainProgram.push('RIGHT')
+            addMainButton('right');
         } else if (selectedProgramWindow == 1){
             playState.p1Program.push('RIGHT')
+            addP1Button('right');
         }
         
     };
@@ -37,19 +44,59 @@ var buttons = (function(){
     var _addDrive = function(){
         if(selectedProgramWindow == 0){
             playState.mainProgram.push('DRIVE')
+            addMainButton('drive');
         } else if(selectedProgramWindow == 1){
             playState.p1Program.push('DRIVE')
+            addP1Button('drive');
         }        
     };
 
     var _addP1 = function(){
         if(selectedProgramWindow == 0){
             playState.mainProgram.push('P1')
+            addMainButton('p1Button');
         } else if(selectedProgramWindow == 1){
-            playState.p1Program.push('P1')
+            playState.p1Program.push('P1');
+            addP1Button('p1Button');
         } 
 
     };
+
+    var addMainButton = function(button){
+        var positionX = playGround.getMainGrid().x;
+        var positionY = playGround.getMainGrid().y + 60;        
+        var lastButton = mainButtons[mainButtons.length  - 1];
+        if(lastButton){
+            if(lastButton.x + lastButton.width >= playGround.getMainGrid().x + playGround.getMainGrid().width){
+                positionX = playGround.getMainGrid().x;
+                positionY = lastButton.y + lastButton.height;
+
+            } else {
+                positionX = lastButton.x + lastButton.width;
+                positionY = lastButton.y;
+            }            
+        }
+        var button = game.add.button(positionX, positionY, button);
+        mainButtons.push(button);
+    };
+
+    var addP1Button = function(button){
+        var positionX = playGround.getP1Grid().x;
+        var positionY = playGround.getP1Grid().y + 60;        
+        var lastButton = p1Buttons[p1Buttons.length  - 1];
+        if(lastButton){
+            if(lastButton.x + lastButton.width >= playGround.getP1Grid().x + playGround.getP1Grid().width){
+                positionX = playGround.getP1Grid().x;
+                positionY = lastButton.y + lastButton.height;
+
+            } else {
+                positionX = lastButton.x + lastButton.width;
+                positionY = lastButton.y;
+            }            
+        }
+        var button = game.add.button(positionX, positionY, button);
+        p1Buttons.push(button);
+    }
     
     var play = function(){
         var tank = tankUtil.getTank();
