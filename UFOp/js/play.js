@@ -26,19 +26,18 @@ var playState = (function(){
     var update = function(){
         var tank = tankUtil.getTank();        
         var blocks = playGround.getBlocks();
-        if(buttons.getShouldDriveX() == 'true'){
+        if(playUtil.playStatus.shouldDriveX == 'true'){
             tankUtil.driveX(tank);
-        } else if(buttons.getShouldRotate() == 'true'){
+        } else if(playUtil.playStatus.shouldRotate == 'true'){
             tankUtil.rotate(tank);
-        } else if(buttons.getShouldDriveY() == 'true'){
+        } else if(playUtil.playStatus.shouldDriveY == 'true'){
             tankUtil.driveY(tank);
         }
-
         game.physics.arcade.collide(tank, blocks, killTank)
     }
 
     var killTank = function(){
-        console.log('BOOM');
+        playUtil.resetPlay();
     }
 
 

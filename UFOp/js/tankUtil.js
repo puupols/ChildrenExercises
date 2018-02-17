@@ -47,16 +47,16 @@ var tankUtil = (function(){
     var callPlay = function(tank){
         tank.body.velocity.x = 0;
         tank.body.velocity.y = 0;
-        buttons.setShouldDriveY('false');
-        buttons.setShouldDriveX('false');
-        buttons.setShouldRotate('false');
-        if(playState.mainProgram[buttons.getMainPlayPosition()] == 'P1' && playState.p1Program.length > buttons.getP1PlayPosition() + 1){
-            buttons.setP1PlayPosition(buttons.getP1PlayPosition() + 1);
+        playUtil.playStatus.shouldDriveY = false;
+        playUtil.playStatus.shouldDriveX = false;
+        playUtil.playStatus.shouldRotate = false;
+        if(playState.mainProgram[playUtil.playStatus.mainPlayPosition] == 'P1' && playState.p1Program.length > playUtil.playStatus.p1PlayPosition + 1){
+            playUtil.playStatus.p1PlayPosition = playUtil.playStatus.p1PlayPosition + 1;
         } else {
-            buttons.setMainPlayPosition(buttons.getMainPlayPosition() + 1);
-            buttons.setP1PlayPosition(0);
+            playUtil.playStatus.mainPlayPosition = playUtil.playStatus.mainPlayPosition + 1;
+            playUtil.playStatus.p1PlayPosition = 0;
         }        
-        buttons.play();
+        playUtil.play();
     }
 
     var getTank = function(){
