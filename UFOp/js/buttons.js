@@ -8,7 +8,7 @@ var buttons = (function(){
     var p1Buttons = [];    
     
     var createMoveButtons = function(gridCountX){
-        var girdEdge = playGround.grids[gridCountX].x + playGround.grids[gridCountX].width;
+        var girdEdge = playGround.grids[gridCountX - 1].x + playGround.grids[gridCountX].width + (game.cache.getImage('blockV').width / 2);
         var gridHeight = playGround.grids[0].height;
         var leftButton = game.add.button(girdEdge, 0, 'leftButton', _addLeft);
         var rightButton = game.add.button(girdEdge + leftButton.width, 0, 'rightButton', _addRight);
@@ -90,7 +90,7 @@ var buttons = (function(){
             }            
         }
         var button = game.add.button(positionX, positionY, button);
-        button.animations.add('glow', [0, 1], 10, true);
+        button.animations.add('glow', [0, 1], 5, true);
         mainButtons.push(button);
     };
 
@@ -109,7 +109,7 @@ var buttons = (function(){
             }            
         }
         var button = game.add.button(positionX, positionY, button);
-        button.animations.add('glow', [0, 1], 2, true);
+        button.animations.add('glow', [0, 1], 5, true);
         p1Buttons.push(button);
     } 
 

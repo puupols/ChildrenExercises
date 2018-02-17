@@ -6,11 +6,11 @@ var configuration = (function(){
             '1' : {
                 'gridCountX' : '5',
                 'gridCountY' : '5',
-                'tankGridPosition' : '21',
+                'tankGridPosition' : '20',
                 'tankAngle' : '0',
                 'blocksV' : ['1' , '6' , '13'],
-                'blocksH' : ['8', '9', '16'],
-                'eagles' : ['3', '14', '5']
+                'blocksH' : ['8', '9', '15'],
+                'eagles' : ['2', '13', '4']
             },
 
             '2' : {
