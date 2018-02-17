@@ -13,56 +13,72 @@ var buttons = (function(){
     var createMoveButtons = function(gridCountX){
         var girdEdge = playGround.grids[gridCountX].x + playGround.grids[gridCountX].width;
         var gridHeight = playGround.grids[0].height;
-        var leftButton = game.add.button(girdEdge, 0, 'left', _addLeft);
-        var rightButton = game.add.button(girdEdge + leftButton.width, 0, 'right', _addRight);
-        var driveButton = game.add.button(girdEdge + leftButton.width + rightButton.width, 0, 'drive', _addDrive);
+        var leftButton = game.add.button(girdEdge, 0, 'leftButton', _addLeft);
+        var rightButton = game.add.button(girdEdge + leftButton.width, 0, 'rightButton', _addRight);
+        var driveButton = game.add.button(girdEdge + leftButton.width + rightButton.width, 0, 'driveButton', _addDrive);
         var p1Button = game.add.button(girdEdge, leftButton.height, 'p1Button', _addP1);
-        var playButton = game.add.button(girdEdge + p1Button.width, leftButton.height, 'play', play);
+        var deleteButton = game.add.button(girdEdge + p1Button.width, leftButton.height, 'deleteButton', _deleteButton);
+        var playButton = game.add.button(girdEdge + p1Button.width + deleteButton.width, leftButton.height, 'playButton', play);
     }    
 
     var _addLeft = function(){
         if(selectedProgramWindow == 0){            
             playState.mainProgram.push('LEFT')
-            addMainButton('left');            
+            _addMainButton('leftButton');            
         } else if(selectedProgramWindow == 1){
             playState.p1Program.push('LEFT')
-            addP1Button('left');
+            _addP1Button('leftButton');
         }            
     };
 
     var _addRight = function(){
         if(selectedProgramWindow == 0){
             playState.mainProgram.push('RIGHT')
-            addMainButton('right');
+            _addMainButton('rightButton');
         } else if (selectedProgramWindow == 1){
             playState.p1Program.push('RIGHT')
-            addP1Button('right');
-        }
-        
+            _addP1Button('rightButton');
+        }        
     };
 
     var _addDrive = function(){
         if(selectedProgramWindow == 0){
             playState.mainProgram.push('DRIVE')
-            addMainButton('drive');
+            _addMainButton('driveButton');
         } else if(selectedProgramWindow == 1){
             playState.p1Program.push('DRIVE')
-            addP1Button('drive');
+            _addP1Button('driveButton');
         }        
     };
 
     var _addP1 = function(){
         if(selectedProgramWindow == 0){
             playState.mainProgram.push('P1')
-            addMainButton('p1Button');
+            _addMainButton('p1Button');
         } else if(selectedProgramWindow == 1){
             playState.p1Program.push('P1');
-            addP1Button('p1Button');
+            _addP1Button('p1Button');
         } 
 
     };
 
-    var addMainButton = function(button){
+    var _deleteButton = function(){
+        if(selectedProgramWindow == 0){
+            if(playState.mainProgram.length > 0){
+                playState.mainProgram.pop();
+                mainButtons[mainButtons.length - 1].destroy();
+                mainButtons.pop();            
+            }            
+        } else if (selectedProgramWindow == 1){
+            if(playState.p1Program.length > 0){
+                playState.p1Program.pop();
+                p1Buttons[p1Buttons.length - 1].destroy();
+                p1Buttons.pop();
+            }            
+        }
+    }
+
+    var _addMainButton = function(button){
         var positionX = playGround.getMainGrid().x;
         var positionY = playGround.getMainGrid().y + 60;        
         var lastButton = mainButtons[mainButtons.length  - 1];
@@ -77,10 +93,11 @@ var buttons = (function(){
             }            
         }
         var button = game.add.button(positionX, positionY, button);
+        button.animations.add('glow', [0, 1], 10, true);
         mainButtons.push(button);
     };
 
-    var addP1Button = function(button){
+    var _addP1Button = function(button){
         var positionX = playGround.getP1Grid().x;
         var positionY = playGround.getP1Grid().y + 60;        
         var lastButton = p1Buttons[p1Buttons.length  - 1];
@@ -95,26 +112,35 @@ var buttons = (function(){
             }            
         }
         var button = game.add.button(positionX, positionY, button);
+        button.animations.add('glow', [0, 1], 10, true);
         p1Buttons.push(button);
     }
     
     var play = function(){
+        mainButtons.forEach(function(button){
+            button.animations.stop(null, true);
+        });
+        p1Buttons.forEach(function(button){
+            button.animations.stop(null, true);
+        }) 
         var tank = tankUtil.getTank();
         if(mainPlayPosition >= playState.mainProgram.length){
             _resetPlay(tank);
         } else {
             var task = playState.mainProgram[mainPlayPosition]            
             if (task == 'P1'){
-                task = playState.p1Program[p1PlayPosition]
+                task = playState.p1Program[p1PlayPosition];
+                p1Buttons[p1PlayPosition].animations.play('glow');
             }
+            mainButtons[mainPlayPosition].animations.play('glow');
             switch(task){
-                case 'DRIVE' : 
+                case 'DRIVE' :                 
                 _drive(task, tank);
                 break;
-                case 'RIGHT' :
+                case 'RIGHT' :                
                 _right(tank);
                 break;
-                case 'LEFT' :
+                case 'LEFT' :                
                 _left(tank);
                 break;                
             }
@@ -135,7 +161,7 @@ var buttons = (function(){
     var _drive = function(task, tank){
         switch(tankUtil.getDesiredAngle()){
             case 90 :
-            tankUtil.setDesiredPositionX(tank.x + playGround.grids[0].width);
+            tankUtil.setDesiredPositionX(tank.x + playGround.grids[0].width);            
             shouldDriveX = 'true';
             break;
             case -90 :

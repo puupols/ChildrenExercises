@@ -3,6 +3,7 @@ var playGround =  (function (){
     var grids = [];
     var mainGrid;
     var p1Grid;
+    var blocks;
     
     var createGrids = function (gridCountX, gridCountY){                
         var grid = game.add.sprite(0, 0, 'oneGrid');
@@ -19,14 +20,19 @@ var playGround =  (function (){
         blocks = game.add.group();                
         blockVList.forEach(function(gridNum) {
           var newBlock = blocks.create(grids[gridNum].x  + grids[gridNum].width, grids[gridNum].y, 'blockV');
-          newBlock.anchor.x = 0.5
+          newBlock.anchor.x = 0.5;
+          game.physics.arcade.enable(newBlock);
+          newBlock.enableBody = true;          
+          newBlock.body.immovable = true;
         });
 
         blockHList.forEach(function(gridNum){
             var newBlock = blocks.create(grids[gridNum].x, grids[gridNum].y + grids[gridNum].height, 'blockH');
-            newBlock.anchor.y = 0.5
-
-        })
+            newBlock.anchor.y = 0.5;
+            game.physics.arcade.enable(newBlock);
+            newBlock.enableBody = true;            
+            newBlock.body.immovable = true;
+        })    
     };
 
     var createEagles = function(eaglesList){
@@ -59,7 +65,12 @@ var playGround =  (function (){
         return p1Grid;
     };
 
+    var getBlocks = function(){
+        return blocks;
+    }
+
     return {
+        getBlocks : getBlocks,
         getMainGrid : getMainGrid,
         getP1Grid : getP1Grid,
         createGrids : createGrids,
