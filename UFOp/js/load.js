@@ -5,6 +5,7 @@ var loadState = {
         game.load.image('mainGrid', '../assets/mainGrid.png');
         game.load.image('p1Grid', '../assets/p1Grid.png');
         game.load.image('tank', '../assets/tank.png');
+        game.load.image('bullet', '../assets/bullet.png');
         game.load.spritesheet('leftButton', '../assets/leftButton.png', 60, 60, 2);
         game.load.spritesheet('rightButton', '../assets/rightButton.png', 60, 60, 2);        
         game.load.spritesheet('driveButton', '../assets/driveButton.png', 60, 60, 2)

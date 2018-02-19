@@ -1,6 +1,7 @@
 var tankUtil = (function(){
     
-    var tank        
+    var tank
+    var weapon        
     
     desiredPositionX = 0;
     desiredPositionY = 0;
@@ -9,6 +10,11 @@ var tankUtil = (function(){
     var createTank = function (gridNumber, angle){
         tank = game.add.sprite((playGround.grids[gridNumber].x + (playGround.grids[gridNumber].width / 2)), (playGround.grids[gridNumber].y + (playGround.grids[gridNumber].height / 2)), 'tank');
         tank.anchor.setTo(0.5);
+        weapon = game.add.weapon(1, 'bullet');
+        weapon.bulletKillType = Phaser.Weapon.KILL_DISTANCE;
+        weapon.bulletKillDistance = game.cache.getImage('oneGrid').width - (tank.width / 2);
+        weapon.bulletAngleOffset = 90;        
+        weapon.trackSprite(tank, tank.width / 2, 0, true);
         tank.angle = angle;
         game.physics.arcade.enable(tank);
     }
@@ -86,6 +92,9 @@ var tankUtil = (function(){
     var setDesiredAngle = function(x){
         desiredAngle = x;
     }
+    var getWeapon = function(){
+        return weapon;
+    }
 
     
     return {
@@ -99,6 +108,7 @@ var tankUtil = (function(){
         setDesiredPositionX : setDesiredPositionX,
         setDesiredPositionY : setDesiredPositionY,
         setDesiredAngle : setDesiredAngle,       
-        createTank : createTank
+        createTank : createTank,
+        getWeapon : getWeapon
     };
 })();

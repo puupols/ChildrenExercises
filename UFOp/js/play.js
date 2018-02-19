@@ -5,6 +5,7 @@ var playState = (function(){
     var eagles;
     var mainProgram = []
     var p1Program = []
+    var fireButton;
     
 
     
@@ -20,7 +21,8 @@ var playState = (function(){
         playGround.createBlocks(levelConfig.blocksV, levelConfig.blocksH);
         playGround.createEagles(levelConfig.eagles);                
         buttons.createMoveButtons(levelConfig.gridCountX);
-        tankUtil.createTank(levelConfig.tankGridPosition, levelConfig.tankAngle);        
+        tankUtil.createTank(levelConfig.tankGridPosition, levelConfig.tankAngle);
+        fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);        
     };
 
     var update = function(){
@@ -33,6 +35,16 @@ var playState = (function(){
         } else if(playUtil.playStatus.shouldDriveY == 'true'){
             tankUtil.driveY(tank);
         }
+
+        if (fireButton.isDown)
+    {
+        var weapon = tankUtil.getWeapon();        
+        weapon.fire();
+        console.log(weapon.fireAngle);
+    }
+
+
+        
         game.physics.arcade.collide(tank, blocks, killTank)
     }
 
