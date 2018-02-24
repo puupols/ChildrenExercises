@@ -21,7 +21,7 @@ var tankUtil = (function(){
         } else if(tank.x > tankUtil.getDesiredPositionX()){
             tank.body.velocity.x = -150;
         } else {
-            callPlay(tank);            
+            callPlay();            
         }        
     }
 
@@ -31,7 +31,7 @@ var tankUtil = (function(){
         } else if(tank.y > tankUtil.getDesiredPositionY()){
             tank.body.velocity.y = -150;
         } else {
-            callPlay(tank);
+            callPlay();
         }        
     }
     
@@ -41,11 +41,11 @@ var tankUtil = (function(){
         } else if(tank.angle > tankUtil.getDesiredAngle() + 1){
             tank.angle -= 1;
         } else {
-            callPlay(tank);
+            callPlay();
         }
     }
 
-    var callPlay = function(tank){
+    var callPlay = function(){
         tank.body.velocity.x = 0;
         tank.body.velocity.y = 0;
         playUtil.playStatus.shouldDriveY = false;

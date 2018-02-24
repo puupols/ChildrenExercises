@@ -17,7 +17,7 @@ var playUtil = (function(){
         }); 
         var tank = tankUtil.getTank();
         if(playStatus.mainPlayPosition >= playState.mainProgram.length){
-            resetPlay(tank);
+            resetPlay();
         } else {
             var task = playState.mainProgram[playStatus.mainPlayPosition]            
             if (task == 'P1'){
@@ -48,33 +48,37 @@ var playUtil = (function(){
         playStatus.shouldDriveX = false;
         playStatus.shouldDriveY = false;
         playStatus.shouldRotate = false;
+        tank.body.velocity.x = 0;
+        tank.body.velocity.y = 0;
         var levelConfig = playState.getLevelConfig();
         tank.x = (playGround.grids[levelConfig.tankGridPosition].x + (playGround.grids[levelConfig.tankGridPosition].width / 2))
         tank.y = (playGround.grids[levelConfig.tankGridPosition].y + (playGround.grids[levelConfig.tankGridPosition].height / 2))
         tank.angle = levelConfig.tankAngle;
         tankUtil.setDesiredPositionX(0);
         tankUtil.setDesiredPositionY(0);
-        tankUtil.setDesiredAngle(0)
+        tankUtil.setDesiredAngle(0);
+        playGround.createBlocks();
+        playGround.createEagles();
     }
 
     var _drive = function(task, tank){
         switch(tankUtil.getDesiredAngle()){
             case 90 :
             tankUtil.setDesiredPositionX(tank.x + playGround.grids[0].width);            
-            playStatus.shouldDriveX = 'true';
+            playStatus.shouldDriveX = true;
             break;
             case -90 :
             tankUtil.setDesiredPositionX(tank.x - playGround.grids[0].width);
-            playStatus.shouldDriveX = 'true';
+            playStatus.shouldDriveX = true;
             break;
             case 0 :
             tankUtil.setDesiredPositionY(tank.y - playGround.grids[0].height);
-            playStatus.shouldDriveY = 'true';
+            playStatus.shouldDriveY = true;
             break;
             case 180 :
             case -180 :
             tankUtil.setDesiredPositionY(tank.y + playGround.grids[0].height);
-            playStatus.shouldDriveY = 'true';
+            playStatus.shouldDriveY = true;
             break;
         }
     }
@@ -87,7 +91,7 @@ var playUtil = (function(){
                 tank.angle = -179
             }
             tankUtil.setDesiredAngle(desiredAngle);
-            playStatus.shouldRotate = 'true';
+            playStatus.shouldRotate = true;
     }
 
     var _left = function(tank){
@@ -98,7 +102,7 @@ var playUtil = (function(){
                 tank.angle = 179
             }
             tankUtil.setDesiredAngle(desiredAngle);
-            playStatus.shouldRotate = 'true';
+            playStatus.shouldRotate = true;
     }
 
     return{
