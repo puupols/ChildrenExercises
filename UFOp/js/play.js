@@ -21,8 +21,7 @@ var playState = (function(){
         playGround.createBlocks(levelConfig.blocksV, levelConfig.blocksH);
         playGround.createEagles(levelConfig.eagles);                
         buttons.createMoveButtons(levelConfig.gridCountX);
-        tankUtil.createTank(levelConfig.tankGridPosition, levelConfig.tankAngle);
-        fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);        
+        tankUtil.createTank(levelConfig.tankGridPosition, levelConfig.tankAngle);  
     };
 
     var update = function(){
@@ -36,12 +35,14 @@ var playState = (function(){
             tankUtil.driveY(tank);
         }
 
-        if (fireButton.isDown)
-    {
-        var weapon = tankUtil.getWeapon();        
-        weapon.fire();
-        console.log(weapon.fireAngle);
-    }
+    if(weapon.bulletOptions.isFired){
+        if(weapon.getBullet().x == weapon.bulletOptions.desiredPositionX && weapon.getBullet().y == weapon.bulletOptions.desiredPositionY){
+            var tank = tankUtil.getTank();
+            weapon.bulletOptions.isFired = false;
+            weapon.getBullet().kill();
+            tankUtil.callPlay(tank);            
+        }        
+    };
 
 
         

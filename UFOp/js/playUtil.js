@@ -14,7 +14,7 @@ var playUtil = (function(){
         });
         buttons.p1Buttons.forEach(function(button){
             button.animations.stop(null, true);
-        }) 
+        }); 
         var tank = tankUtil.getTank();
         if(playStatus.mainPlayPosition >= playState.mainProgram.length){
             resetPlay(tank);
@@ -34,7 +34,10 @@ var playUtil = (function(){
                 break;
                 case 'LEFT' :                
                 _left(tank);
-                break;                
+                break; 
+                case 'SHOOT' :
+                weapon.shoot();
+                break;               
             }
         }        
     }
@@ -68,7 +71,8 @@ var playUtil = (function(){
             tankUtil.setDesiredPositionY(tank.y - playGround.grids[0].height);
             playStatus.shouldDriveY = 'true';
             break;
-            case 180 || -180 :
+            case 180 :
+            case -180 :
             tankUtil.setDesiredPositionY(tank.y + playGround.grids[0].height);
             playStatus.shouldDriveY = 'true';
             break;

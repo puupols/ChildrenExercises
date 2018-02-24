@@ -13,6 +13,7 @@ var buttons = (function(){
         var leftButton = game.add.button(girdEdge, 0, 'leftButton', _addLeft);
         var rightButton = game.add.button(girdEdge + leftButton.width, 0, 'rightButton', _addRight);
         var driveButton = game.add.button(girdEdge + leftButton.width + rightButton.width, 0, 'driveButton', _addDrive);
+        var shootButton = game.add.button(girdEdge + leftButton.width + rightButton.width + driveButton.width, 0, 'shootButton', _addShoot);
         var p1Button = game.add.button(girdEdge, leftButton.height, 'p1Button', _addP1);
         var deleteButton = game.add.button(girdEdge + p1Button.width, leftButton.height, 'deleteButton', _deleteButton);
         var playButton = game.add.button(girdEdge + p1Button.width + deleteButton.width, leftButton.height, 'playButton', playUtil.play);
@@ -47,6 +48,16 @@ var buttons = (function(){
             _addP1Button('driveButton');
         }        
     };
+
+    var _addShoot = function(){
+        if(selectedProgramWindow == 0){
+            playState.mainProgram.push('SHOOT')
+            _addMainButton('shootButton');
+        } else if(selectedProgramWindow == 1){
+            playState.p1Program.push('SHOOT')
+            _addP1Button('shootButton');
+        } 
+    }
 
     var _addP1 = function(){
         if(selectedProgramWindow == 0){

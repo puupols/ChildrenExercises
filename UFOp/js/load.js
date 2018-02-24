@@ -10,6 +10,7 @@ var loadState = {
         game.load.spritesheet('rightButton', '../assets/rightButton.png', 60, 60, 2);        
         game.load.spritesheet('driveButton', '../assets/driveButton.png', 60, 60, 2)
         game.load.spritesheet('p1Button', '../assets/p1Button.png', 60, 60, 2);
+        game.load.spritesheet('shootButton', '../assets/shootButton.png', 60, 60, 2);
         game.load.image('playButton', '../assets/playButton.png');        
         game.load.image('deleteButton', '../assets/deleteButton.png');
         game.load.image('blockH', '../assets/blockH.png');
