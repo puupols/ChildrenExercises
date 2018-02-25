@@ -23,15 +23,23 @@ var playGround =  (function (){
 
     var _createBorderBlocks = function(y, x, gridCountY, gridCountX){
         if(y == 0){
-            _createBlock(grids[x].x, grids[y * gridCountY].y, 'blockH', borderBlocks)            
-        } else if(y == gridCountY - 1){
-            _createBlock(grids[x].x, grids[y * gridCountY].y + game.cache.getImage('oneGrid').height, 'blockH', borderBlocks);            
+            //draw up                  
+            _createBlock(grids[x].x, grids[y].y, 'blockH', borderBlocks);
+        } 
+        
+        if(y == gridCountY - 1){
+            //draw down
+            _createBlock(grids[x].x, grids[y * gridCountX].y + game.cache.getImage('oneGrid').height, 'blockH', borderBlocks);            
         }
 
         if(x == 0){
-            _createBlock(grids[0].x, grids[y * gridCountY].y, 'blockV', borderBlocks)
-        } else if(x == gridCountX - 1){
-            _createBlock(grids[x].x + grids[x].width, grids[y * gridCountY].y, 'blockV', borderBlocks)
+            //draw left
+            _createBlock(grids[x].x, grids[y * gridCountX].y, 'blockV', borderBlocks);
+        } 
+        
+        if(x == gridCountX - 1){
+            //draw right
+            _createBlock(grids[x].x + grids[x].width, grids[y * gridCountX].y, 'blockV', borderBlocks);        
         }        
     }   
 
