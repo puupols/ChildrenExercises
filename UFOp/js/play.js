@@ -43,39 +43,15 @@ var playState = (function(){
             weapon.getBullet().kill();
             tankUtil.callPlay();            
         }      
-        game.physics.arcade.overlap(gameBlocks, weapon.getBullet(), killBlock);
-        game.physics.arcade.overlap(weapon.getBullet(), borderBlocks, killBullet);
-        game.physics.arcade.overlap(weapon.getBullet(), playGround.getEagles(), killEagle);
+        game.physics.arcade.overlap(gameBlocks, weapon.getBullet(), killUtil.killBlock);
+        game.physics.arcade.overlap(weapon.getBullet(), borderBlocks, killUtil.killBullet);
+        game.physics.arcade.overlap(weapon.getBullet(), playGround.getEagles(), killUtil.killEagle);
     };
 
 
-        game.physics.arcade.overlap(tank, borderBlocks, killTank);
-        game.physics.arcade.overlap(tank, gameBlocks, killTank);                
-    }
-
-    var killBlock = function(block, bullet){
-        block.kill();
-        bullet.kill();
-        weapon.bulletOptions.isFired = false;
-        tankUtil.callPlay();        
-    };
-
-    var killTank = function(){
-        playUtil.resetPlay();
-    };
-
-    var killEagle = function(bullet, eagle){
-        bullet.kill();
-        weapon.bulletOptions.isFired = false;
-        eagle.kill();
-        tankUtil.callPlay();
-    };
-
-    var killBullet = function(bullet){
-        bullet.kill();
-        weapon.bulletOptions.isFired = false;
-        tankUtil.callPlay();
-    };
+        game.physics.arcade.overlap(tank, borderBlocks, killUtil.killTank);
+        game.physics.arcade.overlap(tank, gameBlocks, killUtil.killTank);        
+    } 
 
 
     var getLevelConfig = function(){
