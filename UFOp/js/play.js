@@ -10,7 +10,8 @@ var playState = (function(){
 
     
     var init = function(level){
-        levelConfig = configuration.getLevelConfig(level);        
+        levelConfig = configuration.getLevelConfig(level); 
+        playUtil.clearStage();
     };
     
     var create = function(){
@@ -21,7 +22,7 @@ var playState = (function(){
         playGround.createBlocks();
         playGround.createEagles();                
         buttons.createMoveButtons(levelConfig.gridCountX);
-        tankUtil.createTank(levelConfig.tankGridPosition, levelConfig.tankAngle);  
+        tankUtil.createTank(levelConfig.tankGridPosition, levelConfig.tankAngle);          
     };
 
     var update = function(){
@@ -47,8 +48,6 @@ var playState = (function(){
         game.physics.arcade.overlap(weapon.getBullet(), borderBlocks, killUtil.killBullet);
         game.physics.arcade.overlap(weapon.getBullet(), playGround.getEagles(), killUtil.killEagle);
     };
-
-
         game.physics.arcade.overlap(tank, borderBlocks, killUtil.killTank);
         game.physics.arcade.overlap(tank, gameBlocks, killUtil.killTank);        
     } 

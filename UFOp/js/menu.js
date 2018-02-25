@@ -15,16 +15,13 @@ var menuState ={
                 var button = game.add.button(x, y, null, callStart.bind(this, key));
                 var text = game.add.text(x, y, key, {font: "64px", fill: "#dd562f"});
                 button.width = text.width
-                button.height = text.height
-                var text = game.add.text(x, y, key, {font: "64px", fill: "#dd562f"});                        
+                button.height = text.height                               
                 if(x >= 1024 - 64){
                     x = 64
                     y = y + text.height + text.height / 2
                 } else {
                     x = x + text.width + text.width / 2;                
-                }                
-                console.log(button.width)
-                console.log(button.height)
+                }
             }
                                  
         };

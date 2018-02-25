@@ -105,7 +105,20 @@ var playUtil = (function(){
             playStatus.shouldRotate = true;
     }
 
+    var clearStage = function(){
+        playState.mainProgram.splice(0, playState.mainProgram.length);
+        playState.p1Program.splice(0, playState.p1Program.length);
+        buttons.mainButtons.splice(0, buttons.mainButtons.length);
+        buttons.p1Buttons.splice(0, buttons.p1Buttons.length);
+        playUtil.playStatus.mainPlayPosition = 0;
+        playUtil.playStatus.p1PlayPosition = 0;
+        playUtil.playStatus.shouldDriveX = false;
+        playUtil.playStatus.shouldDriveY = false;
+        playUtil.playStatus.shouldRotate = false; 
+    }
+
     return{
+        clearStage : clearStage,
         play : play,
         resetPlay : resetPlay,
         playStatus : playStatus

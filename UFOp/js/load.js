@@ -16,6 +16,7 @@ var loadState = {
         game.load.image('blockH', '../assets/blockH.png');
         game.load.image('blockV', '../assets/blockV.png');
         game.load.image('eagle', '../assets/eagle.png');
+        game.load.image('begining', '../assets/begining.png');
     },
 
     create : function(){

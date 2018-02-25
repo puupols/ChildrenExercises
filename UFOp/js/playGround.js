@@ -8,6 +8,7 @@ var playGround =  (function (){
     var eagles;
     
     var createGrids = function (gridCountX, gridCountY){
+        grids.splice(0, grids.length);
         gameBlocks = game.add.group();
         borderBlocks = game.add.group();         
         for(var y = 0; y < gridCountY; y++){            
@@ -19,6 +20,9 @@ var playGround =  (function (){
         }
         game.world.bringToTop(borderBlocks);
         game.world.bringToTop(gameBlocks);
+        game.add.button(0, grids[grids.length - 1].y + game.cache.getImage('oneGrid').height + (game.cache.getImage('blockH').height / 2), 'begining', function(){
+            game.state.start('menu');
+        });
     };
 
     var _createBorderBlocks = function(y, x, gridCountY, gridCountX){
